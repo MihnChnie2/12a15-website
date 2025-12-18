@@ -1,0 +1,52 @@
+body {
+	margin:0;
+	font-family:anton;
+}
+.menu {
+	background-color: #0099FF;
+	font-size: 30px;
+}
+.menu ul {
+	list-style:none;
+	margin:0;
+	padding:0;
+	display: flex;
+}
+.menu li {
+	position: relative;
+}
+.menu a {
+	display: block;
+	text-decoration: none;
+	padding: 10px 20px;
+	color: #222;
+}
+.menu a:hover {
+	color: #33FFFF;
+}
+body {
+	margin: 0;
+	background-image:
+		linear-gradient(
+			rgba(255,228,181,0.4),
+			rgba(255,228,181,0.4)
+		),	
+		url('pbc.jpg');
+	background-size: cover;
+	background-position: center;
+			}	
+img {
+	margin: auto;
+	display: block;
+	width: 400px;
+}
+p {
+	font-family: 'poppins';
+}
+.img-frame {
+	width: 400px;
+	margin: auto;
+	border: 10px solid #c8b89a;
+	border-radius: 5px;
+	text-align: center;
+}
