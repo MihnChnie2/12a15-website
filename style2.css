@@ -1,0 +1,170 @@
+:root {
+            --primary-blue: #1877F2;
+            --paper-color: #fffdf0;
+            --path-color: #1877F2;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4ece0; /* Màu nền giấy cũ cho bản đồ */
+            font-family: 'Lexend', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Thanh điều hướng giống các trang trước */
+nav {
+    position: static;          /* Giữ menu ở trên cùng khi cuộn */
+    top: 0;
+    z-index: 1000;
+    background: rgba(24, 119, 242, 0.9); /* Màu xanh nhưng có độ trong suốt */
+    backdrop-filter: blur(10px);        /* Hiệu ứng kính mờ xuyên thấu */
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;                          /* Khoảng cách giữa các mục */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+nav a {
+    text-decoration: none;
+    color: white !important;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 20px;       /* Bo tròn các nút mục */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt */
+    text-transform: uppercase; /* Chữ in hoa cho chuyên nghiệp */
+    letter-spacing: 1px;       /* Giãn chữ ra một chút */
+}
+/* Hiệu ứng khi di chuột vào từng mục */
+nav a:hover {
+    background: white;        /* Đổi nền thành trắng */
+    color: #1877F2 !important; /* Chữ chuyển về màu xanh */
+    transform: translateY(-3px); /* Nút hơi nảy lên */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Đánh dấu trang đang xem */
+nav a.active {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+}
+/* Bối cảnh hành trình */
+.map-wrapper {
+    position: relative;
+    padding: 180px 0;
+    width: 100%;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+/* Đường kẻ quanh co SVG */
+.svg-path {
+    position: absolute;
+    top: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; 
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Từng trạm dừng (Station) to lớn */
+.station {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 1300px;
+    margin-bottom: 500px; /* Khoảng cách lướt cực lớn */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.station:nth-child(even) { 
+    flex-direction: row-reverse; 
+}
+
+/* Hiệu ứng khung ảnh khổng lồ */
+.photo-frame {
+    width: 65%;
+}
+
+.photo-frame img {
+    width: 100%;
+    border: 18px solid white; /* Viền trắng dày như ảnh thật */
+    border-radius: 5px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+}
+
+/* Bảng kỷ niệm viết tay */
+.note-card {
+    width: 30%;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 5px;
+    box-shadow: 12px 12px 0px var(--path-color);
+    border: 1px solid #ddd;
+    transform: rotate(-3deg);
+}
+
+.note-card h3 { 
+    margin-top: 0; 
+    color: var(--fb-blue); 
+    font-size: 28px; 
+}
+
+.note-card p {
+    font-family: 'Itim', cursive;
+    font-size: 19px; /* Chữ trong bảng nhỏ gọn */
+    line-height: 1.7;
+    color: #444;
+}
+
+/* Tiêu đề trang */
+.big-title {
+    font-size: 10rem;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    margin-bottom: 300px;
+    color: #333;
+    text-shadow: 3px 3px 0px #fff;
+}
+
+/* Responsive cho di động */
+@media (max-width: 992px) {
+    .station, .station:nth-child(even) { 
+        flex-direction: column; 
+    }
+    .photo-frame { width: 100%; }
+    .note-card { 
+        width: 90%; 
+        margin-top: 30px;
+        transform: rotate(0);
+    }
+
+/* Tự động sửa lỗi lệch và mất ảnh trên điện thoại */
+@media screen and (max-width: 768px) {
+    .station {
+        flex-direction: column !important; /* Xếp ảnh và bảng chữ thành hàng dọc */
+        margin-bottom: 100px !important;   /* Thu hẹp khoảng cách lướt trên Mobile */
+        width: 100% !important;
+        padding: 0 15px !important;
+        box-sizing: border-box;
+    }
+
+    .photo-frame, .note-card {
+        width: 100% !important; /* Ép ảnh và bảng chữ rộng bằng màn hình điện thoại */
+        margin: 10px 0 !important;
+    }
+
+    .photo-frame img {
+        border-width: 5px !important; /* Giảm độ dày viền trắng cho đỡ chiếm chỗ */
+    }
+
+    .big-title {
+        font-size: 2.5rem !important; /* Thu nhỏ tiêu đề cho vừa chiều ngang */
+    }
+}

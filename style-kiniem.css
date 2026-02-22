@@ -1,0 +1,205 @@
+/* Custom Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Itim&family=Lexend:wght@400;800&display=swap');
+
+:root {
+    --bg-color: #fcf5eb;
+    --primary-color: #7a492b; /* Màu gỗ rương */
+    --accent-color: #ffd700; /* Màu vàng kim */
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: 'Lexend', sans-serif;
+    overflow-x: visible;
+    padding-top: 80px; /* Đẩy nội dung xuống tránh menu */
+}
+
+/* Nav (giữ nguyên như cũ nếu đã fix lỗi) */
+nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 10000;
+    background: #1877F2; display: flex; justify-content: center;
+    align-items: center; padding: 10px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+}
+nav a { text-decoration: none; color: white; font-size: 18px; padding: 8px 18px; border-radius: 25px; transition: 0.3s; }
+nav a.active-nav { background: white; color: #1877F2; }
+
+/* Tiêu đề trang */
+.page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    text-align: center;
+    color: var(--primary-color);
+    margin: 50px 0 30px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Khung chứa rương */
+.treasure-chest-container {
+    text-align: center;
+    margin: 40px auto;
+    cursor: pointer;
+    position: relative;
+    width: 450px; /* Rương to hơn theo ý bạn */
+    z-index: 100; /* Luôn nằm trên để có thể click */
+}
+
+.treasure-chest-img {
+    width: 100%;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+.treasure-chest-img.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+/* Khung chứa tổng quát */
+#photoGrid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 25px !important;
+    margin-top: 50px !important;
+    padding: 20px !important;
+    overflow: visible !important; /* Quan trọng để không bị mất nửa ảnh */
+    min-height: 200px;
+}
+
+.photo-item {
+    width: 280px !important;
+    background: white !important;
+    padding: 15px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.3s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.photo-item img {
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important; /* Để ảnh không bị méo */
+    border-radius: 10px !important;
+}
+/* Hiệu ứng khi di chuột vào ảnh */
+.photo-item:hover {
+    transform: scale(1.05) translateY(-5px) !important;
+    z-index: 100 !important;
+}
+
+/* Hình ảnh bên trong */
+
+}
+.grid-item {
+    position: absolute;
+    left: 50%; top: 30%; /* Điểm xuất phát từ rương */
+    width: 200px; height: 150px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    background: white;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 50;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grid-item img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+/* Hiệu ứng nhảy ra đích thực */
+.grid-item.animate-pop-out {
+    opacity: 1;
+    transform: translate(calc(var(--end-x) - 50%), calc(var(--end-y) - 50%)) 
+               rotate(var(--random-rotation)) scale(1);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.grid-item:hover {
+    z-index: 200;
+    transform: translate(calc(var(--end-x) - 50%), calc(var(--end-y) - 50%)) scale(1.1) !important;
+}
+
+}
+/* Container cho nút ngọc */
+#floating-gem-button {
+    /* ĐÂY LÀ LỆNH QUAN TRỌNG NHẤT: Ép nó nổi trên khung nhìn màn hình */
+    position: fixed !important; 
+    top: 20px !important;    /* Cách mép trên màn hình 20px */
+    right: 20px !important;  /* Cách mép phải màn hình 20px */
+    
+    /* Luôn nằm trên cùng mọi thứ khác */
+    z-index: 999999 !important; 
+    text-decoration: none !important;
+}
+
+.gem-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    pointer-events: auto !important;
+}
+
+.gem-img {
+    width: 65px !important;
+    height: 65px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 0 15px gold) !important;
+    /* Hiệu ứng bay nhẹ giúp người dùng dễ chú ý */
+    animation: gemFloat 3s ease-in-out infinite !important;
+}
+
+.gem-label {
+    margin-top: 5px !important;
+    color: #ffcc00 !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    text-shadow: 2px 2px 4px #000 !important;
+    background: rgba(0, 0, 0, 0.6) !important; /* Nền mờ giúp chữ nổi bật */
+    padding: 2px 10px !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
+}
+
+/* Hiệu ứng lơ lửng */
+@keyframes gemFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+/* Điều chỉnh trên thiết bị di động */
+@media (max-width: 768px) {
+    .gem-button-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    .gem-icon {
+        width: 60px;
+        height: 60px;
+    }
+    .gem-text {
+        font-size: 0.8em;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
