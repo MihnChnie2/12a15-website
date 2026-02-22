@@ -26,8 +26,7 @@
     <!-- ==================== FIREBASE SDK ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+        import { getDatabase, ref, push, remove, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         // ============================================================
         // 🔥 THAY ĐOẠN NÀY BẰNG firebaseConfig 🔥
         // ============================================================
@@ -43,14 +42,12 @@
         // ============================================================
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const notesCol = collection(db, "notes_a15k71");
-
-        // Expose to global scope so legacy scripts can call them
+        const db = getDatabase(app);
+        const notesRef = ref(db, "notes_a15k71");
+        
         window._fb = {
-            db, notesCol,
-            addDoc, getDocs, deleteDoc, doc, onSnapshot, query, orderBy, limit,
-            collection
+            db, notesRef,
+            push, remove, ref, onValue, query, orderByChild, limitToLast
         };
 
         // Signal that Firebase is ready
@@ -502,12 +499,15 @@
 
         // Start Firestore real-time listener
         function startListener(){
-            const {notesCol, onSnapshot, query, orderBy, limit}=window._fb;
-            const q=query(notesCol, orderBy('createdAt','desc'), limit(60));
-            unsubscribe=onSnapshot(q,
+            const {notesRef, onValue, query, orderByChild, limitToLast}=window._fb;
+            const q=query(notesRef, orderByChild('createdAt'), limitToLast(60));
+            unsubscribe=onValue(q,
                 (snap)=>{
-                    const notes=snap.docs.map(d=>({id:d.id,...d.data()}));
-                    renderNotes(notes);
+                    const notes=[];
+                    snap.forEach(child=>{
+                        notes.push({id:child.key,...child.val()});
+                    });
+                    renderNotes(notes.reverse());
                     setFbStatus(true,'Đã kết nối · cập nhật thời gian thực ☁️');
                 },
                 (err)=>{
@@ -551,8 +551,8 @@
             btn.disabled=true;
             btn.textContent='Đang gửi... ⏳';
             try{
-                const {notesCol, addDoc}=window._fb;
-                await addDoc(notesCol,{
+                const {notesRef, push}=window._fb;
+                await push(notesRef,{
                     text: txt,
                     author: auth||'',
                     color: selColor,
@@ -597,8 +597,8 @@
             }
             if(pendingDeleteId){
                 try{
-                    const {db,deleteDoc,doc,collection}=window._fb;
-                    await deleteDoc(doc(db,'notes_a15k71',pendingDeleteId));
+                    const {db,remove,ref}=window._fb;
+                    await remove(ref(db,'notes_a15k71/'+pendingDeleteId));
                     showToast('Đã gỡ tờ nhắn khỏi bảng! ✅');
                 }catch(e){
                     console.error(e);
@@ -620,4 +620,5 @@
     </script>
 </body>
 </html>
+
 
