@@ -2,6 +2,15 @@
 <html lang="vi">
 
 <head>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "10d57f16-956c-4237-a349-1e845c576083",
+        });
+      });
+    </script>
     <meta property="og:image" content="https://phambao313.github.io/A15K71-page/a15.jpg" />  
     <meta property="og:url" content="https://phambao313.github.io/A15K71-page/index.html" />
     <meta property="og:type" content="website" />
